@@ -1,0 +1,236 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <title>ColdFusion, English documentation : Web Server Management</title>
+        <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="page">
+            <div id="main">
+                <div id="main-header" class="pageSectionHeader">
+                    <h1 id="title-heading" class="pagetitle">
+                                                <span id="title-text">
+                            ColdFusion, English documentation : Web Server Management
+                        </span>
+                    </h1>
+
+                    <div class="page-metadata">
+                        <p>This page last changed on Mar 27, 2015 by <font color="#0050B2">jacob royal</font>.</p>
+                    </div>
+                </div>
+
+                <div id="content" class="view">
+                    <div id="main-content" class="wiki-content group">
+                    <p>You can connect Adobe ColdFusion to the built-in web server and to external web servers, such as Apache, IIS, and Sun ONE Web Server (formerly known as iPlanet).</p><p><span class="confluence-anchor-link" id="WebServerManagement-backtotop"></span></p><p><style type='text/css'>/*<![CDATA[*/
+div.rbtoc1427966368647 {margin-left: 1.5em;padding: 0px;}
+div.rbtoc1427966368647 ul {margin-left: 0px;padding-left: 10px;}
+div.rbtoc1427966368647 li {margin-left: 0px;padding-left: 0px;}
+
+/*]]>*/</style><div class='rbtoc1427966368647'>
+<ul>
+    <li><a href='#WebServerManagement-AboutwebserversinColdFusion'>About web servers in ColdFusion</a></li>
+    <li><a href='#WebServerManagement-Usingthebuilt-inwebserver'>Using the built-in web server</a></li>
+    <li><a href='#WebServerManagement-Usinganexternalwebserver'>Using an external web server</a></li>
+    <li><a href='#WebServerManagement-Webserverconfiguration'>Web server configuration</a></li>
+<ul>
+    <li><a href='#WebServerManagement-UsingGUImode'>Using GUI mode</a></li>
+<ul>
+    <li><a href='#WebServerManagement-RuntheWebServerConfigurationToolinGUImode'>Run the Web Server Configuration Tool in GUI mode</a></li>
+</ul>
+    <li><a href='#WebServerManagement-Usingthecommand-lineinterface'>Using the command-line interface</a></li>
+<ul>
+    <li><a href='#WebServerManagement-Runthecommand-lineinterface'>Run the command-line interface</a></li>
+    <li><a href='#WebServerManagement-Usingthebatchfilesandshellscripts'>Using the batch files and shell scripts</a></li>
+    <li><a href='#WebServerManagement-command-lineinterfaceexamples'>command-line interface examples</a></li>
+</ul>
+    <li><a href='#WebServerManagement-Configurationfiles'>Configuration files</a></li>
+<ul>
+    <li><a href='#WebServerManagement-Backingupconnectorfiles '>Backing up connector files&nbsp;</a></li>
+<ul>
+    <li><a href='#WebServerManagement-Apacheconfigurationfile'>Apache configuration file</a></li>
+    <li><a href='#WebServerManagement-SunONEconfigurationfile'>Sun ONE configuration file</a></li>
+</ul>
+</ul>
+</ul>
+    <li><a href='#WebServerManagement-Multihoming'>Multihoming</a></li>
+<ul>
+    <li><a href='#WebServerManagement-IIS'>IIS</a></li>
+<ul>
+    <li><a href='#WebServerManagement-ConnectmultiplevirtualsitesonIIStoasingleColdFusionserver'>Connect multiple virtual sites on IIS to a single ColdFusion server</a></li>
+</ul>
+    <li><a href='#WebServerManagement-Apache'>Apache</a></li>
+<ul>
+    <li><a href='#WebServerManagement-ConnectmultipleApachevirtualhostsonawebservertoasingleColdFusionserver'>Connect multiple Apache virtual hosts on a web server to a single ColdFusion server</a></li>
+    <li><a href='#WebServerManagement-ConfiguringColdFusion10ConnectorwithApacheVirtualHostsCommunityVideo'>Configuring ColdFusion 10 Connector with Apache Virtual Hosts (Community Video)</a></li>
+</ul>
+    <li><a href='#WebServerManagement-SunONEWebServerandiPlanet'>Sun ONE Web Server and iPlanet</a></li>
+<ul>
+    <li><a href='#WebServerManagement-ConnectmultipleSunONEWebServervirtualhoststoasingleColdFusionserver'>Connect multiple Sun ONE Web Server virtual hosts to a single ColdFusion server</a></li>
+</ul>
+</ul>
+</ul></div></p><hr /><p><strong><em><a href="Web%2BServer%2BManagement.html">#back to top</a></em></strong></p><h2 id="WebServerManagement-AboutwebserversinColdFusion">About web servers in ColdFusion</h2><p>The web server is a critical component in your ColdFusion environment, and understanding how ColdFusion interacts with web servers can help you administer your site. ColdFusion provides the following web server options:</p><ul><li><strong>Built-in web server</strong> A Coyote is Tomcat's HTTP Connector component that supports the HTTP 1.1 protocol for the web server or application container. Coyote listens for incoming connections on a specific TCP port on the server and forwards the request to the Tomcat Engine. Tomcat Engine processes the request and send back a response to the requesting client. For more information, see <a href="#WebServerManagement-Usingthebuilt-inwebserver" rel="nofollow">Using the built-in web server</a>.</li><li><strong>External web server</strong> A customized web server connector module that forwards requests for ColdFusion pages from an external web server to ColdFusion. For more information, see <a href="#WebServerManagement-Usinganexternalwebserver" rel="nofollow">Using an external web server</a>.<hr /><strong><em><a href="Web%2BServer%2BManagement.html">#back to top</a></em></strong></li></ul><h2 id="WebServerManagement-Usingthebuilt-inwebserver">Using the built-in web server</h2><p>The ColdFusion server configuration is built on top of Tomcat, also called the built-in web server. The built-in web server is useful in the following cases:</p><ul><li><strong>Coexistence/transition</strong> The built-in web server lets you run a previous version of ColdFusion (using an external web server) and ColdFusion (using the built-in web server) on the same computer while you migrate your existing applications to ColdFusion.</li><li><p><strong>Development</strong> If your workstation runs ColdFusion but does not run an external web server, you can still develop and test ColdFusion applications locally through the built-in web server. All web servers listen on a TCP/IP port, which you can specify in the URL. By default, web servers listen for HTTP requests on port 80 (for example, <a class="external-link" href="http://www.adobe.com" rel="nofollow">http://www.adobe.com</a> and <a class="external-link" href="http://www.adobe.com:80" rel="nofollow">http://www.adobe.com:80</a>are the same). Similarly, port 443 is the default port for https requests.By default in the server configuration, the built-in web server listens on port 8500. For example, to access the ColdFusion Administrator through the built-in web server, specify http://_servername_:8500/CFIDE/administrator/index.cfm.</p><div class='panelMacro'><table class='noteMacro'><colgroup><col width='24'><col></colgroup><tr><td valign='top'><img src="images/icons/emoticons/warning.png" width="16" height="16" align="absmiddle" alt="" border="0"></td><td><b>Note</b><br /><p>URLs are case sensitive on UNIX operating systems.</p></td></tr></table></div><p>If you enable the built-in web server during the installation process and the port is already in use, the installer automatically finds the next-highest available port and configures the built-in web server to use that port. To determine the port number used by the built-in web server, open the <em>cf_root</em>/runtime/conf/server.xml file in a text editor and examine the <code>port</code> attribute of the connector. For example, <code>&lt;Connector port=&quot;8504&quot; protocol=&quot;org.apache.coyote.http11.Http11Protocol&gt;</code>.Keep in mind the following when using the built-in web server:</p><ul><li>Whenever possible, configure your external web server as part of the ColdFusion installation, except for the two cases mentioned previously (coexistence with a previous ColdFusion version, and when the computer has no web server). If you select the built-in web server by mistake, run the Web Server Configuration Tool manually to configure your external web server after the installation. For information about the Web Server Configuration Tool, see <a href="#WebServerManagement-Webserverconfiguration" rel="nofollow">Web server configuration</a>.</li><li>The default web root when using the built-in web server is <em>cf_root</em>/cfusion/wwwroot (server configuration). By default, the ColdFusion Administrator (CFIDE directory) is under this web root.</li><li><p>If you want the built-in web server to serve pages from a different web root directory, define a virtual mapping in the <em>cf_root</em>/cfusion/runtime/conf/server.xml file. Search for the string, &quot;To add virtual directory.&quot; Uncomment the entry context path below. To add a virtual directory, add the aliases attribute as shown below:</p><div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="theme: Confluence; brush: actionscript; gutter: false" style="font-size:12px;">&lt;Context path=&quot;/&quot; docBase=&quot;&lt;absolute_path_to_CF_install_directory&gt;\wwwroot&quot; WorkDir=&quot;&lt;cf_home&gt;\runtime\conf\Catalina\localhost\tmp&quot; aliases=&quot;/path1=&lt;absolute_path_to_directory1&gt;,/path2=&lt;absolute_path_to_directory2&gt;&quot;&gt;&lt;/Context&gt;
+</pre>
+</div></div><div class='panelMacro'><table class='infoMacro'><colgroup><col width='24'><col></colgroup><tr><td valign='top'><img src="images/icons/emoticons/information.png" width="16" height="16" align="absmiddle" alt="" border="0"></td><td><p>If you have CFML pages under your external web server's root, ensure that ColdFusion is configured to serve these pages through the external web server. If you did not configure ColdFusion_ to use an external web server, your external web server serves ColdFusion Markup Language (CFML) source code for ColdFusion pages saved under its web root._</p></td></tr></table></div><p> </p><hr /><p> </p><p><strong><em><a href="Web%2BServer%2BManagement.html">#back to top</a></em></strong></p></li></ul></li></ul><h2 id="WebServerManagement-Usinganexternalwebserver">Using an external web server</h2><p>ColdFusion uses the Tomcat web server connector to forward requests from an external web server to the ColdFusion runtime system.<br /> When a request is made for a CFM page, the connector on the web server opens a network connection to the Tomcat proxy service. The ColdFusion runtime system handles the request and sends its response back through the proxy service and connector. The web server connector uses web-server-specific plug-in modules, as the following table describes:</p><div class="table-wrap"><table class="confluenceTable"><tbody><tr><th class="confluenceTh"><p>Web server</p></th><th class="confluenceTh"><p>Connector details</p></th></tr><tr><td class="confluenceTd"><p>Apache</p></td><td class="confluenceTd"><p>The Web Server Configuration Tool adds the following elements to the Apache httpd.conf file:</p><ul><li>A LoadModule directive defines the connector.</li><li>An AddHandler directive tells Apache to route requests for ColdFusion pages through the connector.<br /> For Apache 2.x, the connection module is mod_jk.so.</li></ul></td></tr><tr><td class="confluenceTd"><p>IIS</p></td><td class="confluenceTd"><p>The Web Server Configuration Tool adds the following elements at either the global level (default) or website level:</p><ul><li>Creates a folder <code>1</code> in <code>cf_root\config\wsconfig</code>, that contains all connector-related files.</li><li>Creates a virtual directory <code>Jakarta</code> in <code>cf_root\config\wsconfig</code> (in IIS).</li><li>Adds an entry, <code>tomcat</code>, under the{{ ISAPI FILTERS}}. This points to <code>cf_root\config\wsconfig\1\ isapi_redirect.dll</code>.</li><li>Adds an entry, <code>tomcat</code>, to <code>cf_root\config\wsconfig\1\isapi_redirect.dll</code> with permission <code>allowed</code> under ISAPI and CGI Restrictions. This is applicable for global sites in IIS manager.</li><li>Adds the following <code>isapi</code> handlers: <code>cfcHandler</code>, <code>cfmHandler</code>, <code>cfmlHandler</code>, <code>cfrHandler</code>, and <code>cfswfHandler</code>.</li><li>For debugging issues, set the log level to <code>debug</code>, in the <code>isapi_redirect.properties</code> file present in the {{cf_roots\config\wsconfig\1\ }}directory.</li><li>To disable webserver buffer, change the <code>is_buffer_enable</code> to <code>false</code> in the <code>cf_root\config\wsconfig\1\isapi_redirect.properties</code> file. Do this if you want <code>cfflush</code> to work over an IIS connector. If your application does not use <code>cfflush</code>, set this to <code>true</code>. This may increase the performance.</li></ul></td></tr><tr><td class="confluenceTd"><p>Sun ONE Web Server</p></td><td class="confluenceTd"><p>The Web Server Configuration Tool adds the following elements to Sun ONE Web Server configuration files:</p><ul><li>Creates a folder <code>1</code> in the <code>ColdFusion10\config\wsconfig</code> folder that contains all connector-related files.</li><li><p>Adds the following entry in the <code>magnus.conf</code>file of Sun ONE. Change the log level to{{ debug}} for debugging issues.</p><div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="theme: Confluence; brush: actionscript; gutter: false" style="font-size:12px;">Init fn=&quot;load-modules&quot; shlib=&quot;C:/ColdFusion10/config/wsconfig/2/nsapi_redirect.dll&quot; funcs=&quot;jk_init,jk_service&quot; 
+Init fn=&quot;jk_init&quot; worker_file=&quot;cf_root/config/wsconfig/2/workers.properties&quot; log_level=&quot;info&quot; log_file=&quot;cf_root/config/wsconfig/2/nsapi.log&quot; shm_file=&quot;cf_root/config/wsconfig/2/jk_shm&quot;
+</pre>
+</div></div><p> </p><p>Adds the entries for all extensions in the <code>obj.conf</code>file of Sun ONE. For example,</p><div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="theme: Confluence; brush: actionscript; gutter: false" style="font-size:12px;">NameTrans fn=&quot;assign-name&quot; from=&quot;/*.cfc/*&quot; name=&quot;jknsapi&quot; 
+NameTrans fn=&quot;assign-name&quot; from=&quot;/*.cfc&quot; name=&quot;jknsapi&quot; 
+NameTrans fn=&quot;assign-name&quot; from=&quot;/*.cfml&quot; name=&quot;jknsapi&quot; 
+&lt;Object name=&quot;jknsapi&quot;&gt; 
+Service fn=&quot;jk_service&quot; method=&quot;*&quot; worker=&quot;server1&quot; 
+&lt;/Object&gt;
+</pre>
+</div></div></li></ul></td></tr></tbody></table></div><p> </p><p><strong><em><a href="Web%2BServer%2BManagement.html">#back to top</a></em></strong></p><div class='panelMacro'><table class='infoMacro'><colgroup><col width='24'><col></colgroup><tr><td valign='top'><img src="images/icons/emoticons/information.png" width="16" height="16" align="absmiddle" alt="" border="0"></td><td><p>Note that the connector needs to be re-configured, if new sites are added after the connector has been configured with the 'All Sites' option in IIS. </p></td></tr></table></div><h2 id="WebServerManagement-Webserverconfiguration">Web server configuration</h2><p>ColdFusion uses the Web Server Configuration Tool to configure an external web server with the modules and settings that the connector requires connect to ColdFusion. You can run the Web Server Configuration Tool through either the command-line interface or the graphical user interface (GUI). In either case, the Web Server Configuration Tool configures your external web server to interact with a ColdFusion server.</p><h3 id="WebServerManagement-UsingGUImode">Using GUI mode</h3><p>The Web Server Configuration Tool includes a GUI mode, which you can use to specify external web server configuration settings through a graphical interface.</p><div class='panelMacro'><table class='noteMacro'><colgroup><col width='24'><col></colgroup><tr><td valign='top'><img src="images/icons/emoticons/warning.png" width="16" height="16" align="absmiddle" alt="" border="0"></td><td><b>Note</b><br /><p>When you use the Web Server Configuration Tool in GUI mode, select the Configure Web Server for ColdFusion Applications check box.</p></td></tr></table></div><h4 id="WebServerManagement-RuntheWebServerConfigurationToolinGUImode">Run the Web Server Configuration Tool in GUI mode</h4><ol><li><p>Open a console window.</p><div class='panelMacro'><table class='noteMacro'><colgroup><col width='24'><col></colgroup><tr><td valign='top'><img src="images/icons/emoticons/warning.png" width="16" height="16" align="absmiddle" alt="" border="0"></td><td><b>Note</b><br /><p>In Windows, to start the Web Server Configuration Tool, select Start &gt; Programs &gt; Adobe &gt; ColdFusion 11 <em>&gt; Web Server Configuration Tool.</em></p></td></tr></table></div></li><li>Change to the <em>cf_root</em>/cfusion/runtime/bin.</li><li>Start the Web Server Configuration Tool using the wsconfig.exe (Windows) or wsconfig (UNIX) command. The Web Server Configuration Tool window appears.</li><li>Click Add.</li><li>Select Configure Web Server For ColdFusion Applications.</li><li><p>Provide the application server host and the application server cluster.</p><div class='panelMacro'><table class='noteMacro'><colgroup><col width='24'><col></colgroup><tr><td valign='top'><img src="images/icons/emoticons/warning.png" width="16" height="16" align="absmiddle" alt="" border="0"></td><td><b>Note</b><br /><p>The server or cluster does not have to reside on the web server computer. In this case, enter the IP address or server name of the remote computer.</p></td></tr></table></div></li><li>In the Web Server Properties area, enter web-server-specific information, and click OK.</li><li>(Optional) The web server connector does not serve static content (such as HTML files and images) from the built-in web server's root directory. If your ColdFusion web application has an empty context root <img class="emoticon emoticon-tick" src="s/en_GB/3295/19/_/images/icons/emoticons/check.png" data-emoticon-name="tick" alt="(tick)"/> and you want to serve pages from the built-in web server's root directory, you can create a web server mapping to the corresponding directory under the built-in web server.</li></ol><h3 id="WebServerManagement-Usingthecommand-lineinterface">Using the command-line interface</h3><p>You can also run the Web Server Configuration Tool through a command-line interface.</p><h4 id="WebServerManagement-Runthecommand-lineinterface">Run the command-line interface</h4><ol><li>Open a console window.</li><li>Change to the <em>cf_root</em>/runtime/bin (server configuration) directory.</li><li><p>Execute the wsconfig.exe (Windows) or wsconfig (UNIX) command:</p><div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="theme: Confluence; brush: actionscript; gutter: false" style="font-size:12px;">	  wsconfig.exe [-options] 
+	  ./wsconfig [-options]
+</pre>
+</div></div><p>The following table describes the options:</p></li></ol><div class="table-wrap"><table class="confluenceTable"><tbody><tr><th class="confluenceTh"><p>Option</p></th><th class="confluenceTh"><p>Description</p></th></tr><tr><td class="confluenceTd"><p><code>-ws</code></p></td><td class="confluenceTd"><p>Specifies the web server, as follows:</p><ul><li>IIS</li><li>Apache</li><li>SunOne<br /> The web server name you supply is not case sensitive.</li></ul></td></tr><tr><td class="confluenceTd"><p>{{-dir }}</p></td><td class="confluenceTd"><p>Specifies the path to the configuration directory (SunONE config).</p></td></tr><tr><td class="confluenceTd"><p><code>-site</code></p></td><td class="confluenceTd"><p>Specifies the IIS website name (case-sensitive). Specify All or 0 to configure the connector at a global level, which applies to all IIS websites.</p></td></tr><tr><td class="confluenceTd"><p>{{-host }}</p></td><td class="confluenceTd"><p>Specifies the ColdFusion server address. The default value is <code>localhost</code>.</p></td></tr><tr><td class="confluenceTd"><p><code>-norestart</code></p></td><td class="confluenceTd"><p>Specifies not to restart the web server.</p></td></tr><tr><td class="confluenceTd"><p><code>-cluster</code></p></td><td class="confluenceTd"><p>Specifies the Tomcat cluster name. Use this option to define a connection to a Tomcat cluster instead of a single server.</p></td></tr><tr><td class="confluenceTd"><p><code>-l</code></p></td><td class="confluenceTd"><p>Enables verbose logging for the connector.</p></td></tr><tr><td class="confluenceTd"><p><code>-upgrade</code></p></td><td class="confluenceTd"><p>Upgrades existing configured connectors with newer modules from a newer wsconfig.jar file.</p></td></tr><tr><td class="confluenceTd"><p><code>-service</code></p></td><td class="confluenceTd"><p>Specifies the Apache Windows service name. The default value is <code>Apache</code>.</p></td></tr><tr><td class="confluenceTd"><p><code>-bin</code></p></td><td class="confluenceTd"><p>Specifies the path to the Apache server binary file (apache.exe in Windows, httpd on UNIX).</p></td></tr><tr><td class="confluenceTd"><p><code>-script</code></p></td><td class="confluenceTd"><p>Specifies the path to the Apache UNIX control script file (apachectl, but slightly different with certain Apache variants, such as Stronghold).</p></td></tr><tr><td class="confluenceTd"><p><code>-v</code></p></td><td class="confluenceTd"><p>Enables verbose output from the Web Server Configuration Tool.</p></td></tr><tr><td class="confluenceTd"><p><code>-list</code></p></td><td class="confluenceTd"><p>Lists all configured web servers.</p></td></tr><tr><td class="confluenceTd"><p><code>-list -host server-host</code></p></td><td class="confluenceTd"><p>Lists all Tomcat servers on the specified host.</p></td></tr><tr><td class="confluenceTd"><p><code>-remove</code></p></td><td class="confluenceTd"><p>Removes a configuration. Requires the <code>ws</code> and either the <code>dir</code> or <code>site</code> options.</p></td></tr><tr><td class="confluenceTd"><p><code>-uninstall</code></p></td><td class="confluenceTd"><p>Removes all configured connectors.</p></td></tr><tr><td class="confluenceTd"><p>{{-h }}</p></td><td class="confluenceTd"><p>Lists all parameters.</p></td></tr></tbody></table></div><h4 id="WebServerManagement-Usingthebatchfilesandshellscripts">Using the batch files and shell scripts</h4><p>The ColdFusion server configuration includes batch files and shell scripts that implement typical command-line connector configurations. These files are in the <em>cf_root</em>/bin/connectors directory. For example, the IIS_connector.bat file configures all sites in IIS to site 0, which establishes a globally defined connector so that all sites inherit the filter and mappings.<br /> If you use Apache or Sun ONE Web Server, use these files as prototypes, editing, and saving them as appropriate for your site.</p><h4 id="WebServerManagement-command-lineinterfaceexamples">command-line interface examples</h4><p>Examples of multiple use-cases for different web servers:</p><ol><li><p>Configure a specific IIS site:</p><div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="theme: Confluence; brush: actionscript; gutter: false" style="font-size:12px;">cf_root/runtime/bin/wsconfig.exe -ws iis -site &quot;web31&quot; -v
+</pre>
+</div></div><p>On systems where all sites run ColdFusion, there is generally no need to configure an individual site.</p></li><li><p>Configure all existing IIS sites (ISPs):</p><div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="theme: Confluence; brush: actionscript; gutter: false" style="font-size:12px;">cf_root/runtime/bin/wsconfig.exe -ws iis -site 0 -v
+</pre>
+</div></div></li><li><p>Configure Apache on UNIX #1:</p><div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="theme: Confluence; brush: actionscript; gutter: false" style="font-size:12px;">cf_root/runtime/bin/wsconfig -ws Apache -bin /opt/apache2/bin/httpd -script /opt/apache2/bin/apachectl -dir /opt/apache2/conf -v
+</pre>
+</div></div></li><li><p>Configure Apache on UNIX #2:</p><div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="theme: Confluence; brush: actionscript; gutter: false" style="font-size:12px;">cf_root/runtime/bin/wsconfig -ws Apache-bin /usr/bin/httpd -script /usr/bin/httpd -dir /etc/httpd/conf -coldfusion -v
+</pre>
+</div></div></li><li><p>Configure Apache in Windows:</p><div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="theme: Confluence; brush: actionscript; gutter: false" style="font-size:12px;">cf_root/runtime/bin/wsconfig.exe -ws apache -dir &quot;c:\program files\apache group\apache2\conf&quot; -coldfusion -v
+</pre>
+</div></div></li><li><p>Configure Sun ONE Web Server on UNIX:</p><div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="theme: Confluence; brush: actionscript; gutter: false" style="font-size:12px;">cf_root/runtime/bin/wsconfig -ws sunone -dir [path to config] -coldfusion -v
+</pre>
+</div></div></li></ol><h3 id="WebServerManagement-Configurationfiles">Configuration files</h3><p>Each time you run the Web Server Configuration Tool, it creates a configuration file and directory. For example, the first time you run the tool in the server configuration, it creates files under <em>cf_root</em>/config/wsconfig/1; the second time, it creates <em>cf_root</em>/config/wsconfig/2; and so on. Each of these subdirectories contains the appropriate platform-specific connector module and web-server-specific supporting files.</p><h4 id="WebServerManagement-Backingupconnectorfiles ">Backing up connector files </h4><p>WS Config backs up the connector files when you un-configure or reconfigure the connector. It helps you to compare the new connector files with the backed up files and redo the required customization. </p><p>All files available under connector directory (<em>../ColdFusion/config/wsconfig/magicnumber</em>) are backed up in a directory named magicnumber.1 or magicnumber.2  and so on, depending on the number of previous backup directories that are available for same connector. These directories are available in backup directory (<em>../ColdFusion/config/wsconfig/backup</em>) . For instance, if you are about to un-configure a connector which is configured under <em>../wsconfig/2/</em> , its files are backed up in <em>../wsconfig/backup/2.1. </em>If this is the second time you are un-configuring the connector, then .<em>./wsconfig/backup/2.1</em> is already present. In that case files are saved under <em>../wsconfig/backup/2.2. </em></p><div class='panelMacro'><table class='infoMacro'><colgroup><col width='24'><col></colgroup><tr><td valign='top'><img src="images/icons/emoticons/information.png" width="16" height="16" align="absmiddle" alt="" border="0"></td><td><p><span style="color: rgb(0,0,0);">In case of Apache connector, </span><em>mod_jk.conf </em><span style="color: rgb(0,0,0);">, which is present in Apache </span><em>conf</em><span style="color: rgb(0,0,0);"> directory is also backed up under </span><em>../wsconfig/backup/2.2</em><span style="color: rgb(0,0,0);"> directory. Also, if you are un-configuring from command line then connector is backed up by default but if you are un-configuring using WS Config UI tool, you get an option to either accept or deny the backup before un-configuring the connector. This is valid for all connectors and in all the supported platforms. </span></p></td></tr></table></div><p><span style="color: rgb(0,51,102);font-size: 12.0pt;font-weight: bold;line-height: normal;">Sample configuration files</span></p><p>The following are some examples of connector-specific web server properties that help describe the web server configuration file parameters. These examples assume that Tomcat and the web server are on the same computer.</p><h5 id="WebServerManagement-Apacheconfigurationfile">Apache configuration file</h5><p>The following is a typical httpd.conf file for an installation of ColdFusion on the same computer as an Apache 2.0 web server. The httpd.cof file includes the following entry:</p><div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="theme: Confluence; brush: actionscript; gutter: false" style="font-size:12px;">Include &quot;Apache_install\Apache Software Foundation\Apache2.2\conf\mod_jk.conf&quot;
+</pre>
+</div></div><p>The <code>mod_jk.conf</code> file has the following:</p><div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="theme: Confluence; brush: actionscript; gutter: false" style="font-size:12px;"># # Load mod_jk module 
+LoadModule jk_module &quot;CF_install\config\wsconfig\1\mod_jk.so&quot; 
+# Where to find workers.properties 
+JkWorkersFile &quot;CF_install\config\wsconfig\1\workers.properties&quot; 
+JkMountFile &quot;CF_install\config\wsconfig\1\uriworkermap.properties&quot; 
+# Where to put jk logs 
+JkLogFile &quot;CF_install\config\wsconfig\1\mod_jk.log&quot; 
+# Where to put jk shared memory 
+JkShmFile &quot;CF_install\config\wsconfig\1\jk_shm&quot; 
+# Set the jk log level [debug/error/info] 
+JkLogLevel info 
+# Select the timestamp log format 
+JkLogStampFormat &quot;[%a %b %d %H:%M:%S %Y] &quot; 
+AddHandler jakarta-servlet .cfm .cfml .cfc .cfr .cfswf 
+Alias /CFIDE &quot;CF_install\cfusion\wwwroot\CFIDE&quot; 
+&lt;Directory &quot;CF_install\cfusion\wwwroot\CFIDE&quot;&gt; 
+Options Indexes FollowSymLinks 
+AllowOverride None 
+Order allow,deny 
+Allow from all 
+&lt;/Directory&gt; 
+&lt;Files ~ &quot;.hbmxml$&quot;&gt; 
+Order allow,deny 
+Deny from all 
+&lt;/Files&gt;
+</pre>
+</div></div><h5 id="WebServerManagement-SunONEconfigurationfile">Sun ONE configuration file</h5><p>The following is a typical obj.conf file for iPlanet, or Sun ONE Web Server:</p><div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="theme: Confluence; brush: actionscript; gutter: false" style="font-size:12px;">Init fn=&quot;load-modules&quot; shlib=&quot;j2eeplugin.dll&quot; 
+Init fn=&quot;load-modules&quot; shlib=&quot;CF_install/config/wsconfig/2/nsapi_redirect.dll&quot; funcs=&quot;jk_init,jk_service&quot; 
+Init fn=&quot;jk_init&quot; worker_file=&quot;CF_install/config/wsconfig/2/workers.properties&quot; log_level=&quot;info&quot; log_file=&quot;CF_install/config/wsconfig/2/nsapi.log&quot; shm_file=&quot;CF_install/config/wsconfig/2/jk_shm&quot;
+</pre>
+</div></div><p>The following is a typical magnus.conf file for iPlanet, or Sun ONE Web Server:</p><div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="theme: Confluence; brush: actionscript; gutter: false" style="font-size:12px;">&lt;Object name=&quot;default&quot;&gt; 
+NameTrans fn=&quot;assign-name&quot; from=&quot;/*.hbmxml&quot; name=&quot;jknsapi&quot; 
+NameTrans fn=&quot;assign-name&quot; from=&quot;/*.jsp&quot; name=&quot;jknsapi&quot; 
+NameTrans fn=&quot;assign-name&quot; from=&quot;/*.sws&quot; name=&quot;jknsapi&quot; 
+NameTrans fn=&quot;assign-name&quot; from=&quot;/*.cfswf&quot; name=&quot;jknsapi&quot; 
+NameTrans fn=&quot;assign-name&quot; from=&quot;/*.cfr&quot; name=&quot;jknsapi&quot; 
+NameTrans fn=&quot;assign-name&quot; from=&quot;/*.cfc/*&quot; name=&quot;jknsapi&quot; 
+NameTrans fn=&quot;assign-name&quot; from=&quot;/*.cfc&quot; name=&quot;jknsapi&quot; 
+NameTrans fn=&quot;assign-name&quot; from=&quot;/*.cfml&quot; name=&quot;jknsapi&quot; 
+NameTrans fn=&quot;assign-name&quot; from=&quot;/*.swc&quot; name=&quot;jknsapi&quot;NameTrans fn=&quot;assign-name&quot; from=&quot;/*.cfm/*&quot; name=&quot;jknsapi&quot; 
+NameTrans fn=&quot;assign-name&quot; from=&quot;/*.cfm&quot; name=&quot;jknsapi&quot; 
+NameTrans fn=&quot;assign-name&quot; from=&quot;/*.as&quot; name=&quot;jknsapi&quot; 
+NameTrans fn=&quot;assign-name&quot; from=&quot;/*.mxml&quot; name=&quot;jknsapi&quot; 
+NameTrans fn=&quot;assign-name&quot; from=&quot;/*.cfml/*&quot; name=&quot;jknsapi&quot; 
+NameTrans fn=&quot;assign-name&quot; from=&quot;/rest/*&quot; name=&quot;jknsapi&quot; 
+NameTrans fn=&quot;assign-name&quot; from=&quot;/flex-internal/*&quot; name=&quot;jknsapi&quot; 
+NameTrans fn=&quot;assign-name&quot; from=&quot;/flashservices/gateway/*&quot; name=&quot;jknsapi&quot; 
+NameTrans fn=&quot;assign-name&quot; from=&quot;/cfform-internal/*&quot; name=&quot;jknsapi&quot; 
+NameTrans fn=&quot;assign-name&quot; from=&quot;/CFFileServlet/*&quot; name=&quot;jknsapi&quot; 
+NameTrans fn=&quot;assign-name&quot; from=&quot;/cffileservlet/*&quot; name=&quot;jknsapi&quot; 
+NameTrans fn=&quot;assign-name&quot; from=&quot;/flex2gateway&quot; name=&quot;jknsapi&quot; 
+NameTrans fn=&quot;assign-name&quot; from=&quot;/flex2gateway/*&quot; name=&quot;jknsapi&quot; 
+NameTrans fn=&quot;assign-name&quot; from=&quot;/CFFormGateway/*&quot; name=&quot;jknsapi&quot; 
+NameTrans fn=&quot;assign-name&quot; from=&quot;/cfformgateway/*&quot; name=&quot;jknsapi&quot; 
+NameTrans fn=&quot;pfx2dir&quot; from=&quot;/CFIDE&quot; dir=&quot;C:/ColdFusion10/cfusion/wwwroot/CFIDE&quot; 
+AuthTrans fn=&quot;match-browser&quot; browser=&quot;*MSIE*&quot; ssl-unclean-shutdown=&quot;true&quot; 
+NameTrans fn=&quot;ntrans-j2ee&quot; name=&quot;j2ee&quot; 
+NameTrans fn=&quot;pfx2dir&quot; from=&quot;/mc-icons&quot; dir=&quot;C:/Program Files/Oracle/WebServer7/lib/icons&quot; name=&quot;es-internal&quot; 
+PathCheck fn=&quot;uri-clean&quot; 
+PathCheck fn=&quot;check-acl&quot; acl=&quot;default&quot; 
+PathCheck fn=&quot;find-pathinfo&quot; 
+PathCheck fn=&quot;find-index-j2ee&quot; 
+PathCheck fn=&quot;find-index&quot; index-names=&quot;index.html,home.html,index.jsp&quot; 
+ObjectType fn=&quot;type-j2ee&quot; 
+ObjectType fn=&quot;type-by-extension&quot; 
+ObjectType fn=&quot;force-type&quot; type=&quot;text/plain&quot; 
+Service method=&quot;(GET|HEAD)&quot; type=&quot;magnus-internal/directory&quot; fn=&quot;index-common&quot; 
+Service method=&quot;(GET|HEAD|POST)&quot; type=&quot;*~magnus-internal/*&quot; fn=&quot;send-file&quot; 
+Service method=&quot;TRACE&quot; fn=&quot;service-trace&quot; 
+Error fn=&quot;error-j2ee&quot; 
+AddLog fn=&quot;flex-log&quot; 
+&lt;/Object&gt;
+</pre>
+</div></div><hr /><p><strong><em><a href="Web%2BServer%2BManagement.html">#back to top</a></em></strong></p><h2 id="WebServerManagement-Multihoming">Multihoming</h2><p>You typically use the Web Server Configuration Tool to configure a connection between the web server and ColdFusion server running on the same computer. However, you can use the web server connector to route requests to multiple virtual sites to a single ColdFusion server. This is known as <em>multihoming</em>.<br /> In a multihomed environment, you have multiple virtual hosts (also known as virtual sites) connected to a single ColdFusion server. You might use these virtual hosts for separate applications, such as Human Resources (HR), payroll, and marketing, or for separate users in a hosting environment.</p><div class='panelMacro'><table class='noteMacro'><colgroup><col width='24'><col></colgroup><tr><td valign='top'><img src="images/icons/emoticons/warning.png" width="16" height="16" align="absmiddle" alt="" border="0"></td><td><b>Note</b><br /><p>You use web-server-specific methods to create separate virtual websites for each use.</p></td></tr></table></div><p>Multihoming configuration tasks include:</p><ul><li><strong>Enabling access to the ColdFusion Administrator</strong> If any of the applications under a virtual host need to access the ColdFusion Administrator, create a web server mapping (Alias directive in Apache) for /CFIDE that points to the original CFIDE directory. Alternatively, you can copy the entire CFIDE directory to the virtual website.</li><li><strong>Enabling access to the cfform.js file</strong> If you do not create a web server mapping for /CFIDE, and any of the applications under a virtual host use the <code>cfform</code>tag, enable the virtual host to find the JavaScript files under the CFIDE/scripts directory. To enable access to the scripts, use one of the following options:<ul><li>Copy the <em>original_web_root</em>/CFIDE/scripts directory to a CFIDE/scripts directory on your virtual host.</li><li>Modify all <code>cfform</code> tags to use the <code>scriptsrc</code> attribute to specify the location of the cfform.js file.</li></ul></li><li><strong>Disabling the cacheRealPath attribute</strong> To ensure that ColdFusion always returns pages from the correct server, disable Cache Web Server Paths in the Caching page of the ColdFusion Administrator. The procedures you perform to enable multihoming differ for each web server.</li></ul><h3 id="WebServerManagement-IIS">IIS</h3><p>When you use IIS, you run the IIS Administrator to create additional websites and run the Web Server Configuration Tool. You store ColdFusion pages under the web root of each virtual website.</p><h4 id="WebServerManagement-ConnectmultiplevirtualsitesonIIStoasingleColdFusionserver">Connect multiple virtual sites on IIS to a single ColdFusion server</h4><ol><li>Use the IIS Administrator to create virtual websites, as necessary. The web root directory should enable read, write, and execute access. For more information, see your IIS documentation.</li><li>Configure DNS for each virtual website, as described in your IIS documentation.</li><li>Test each virtual website to ensure that HTML pages are served correctly.</li><li>Run the Web Server Configuration Tool, as follows:<ul><li>GUI - Select IIS for the Web Server, select All from the IIS Web Site drop-down list, and select the Configure Web Server for ColdFusion Applications check box.</li><li><p>Command line - Specify the <code>-site 0</code>option, as the following server configuration example shows:</p><div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="theme: Confluence; brush: actionscript; gutter: false" style="font-size:12px;">cf_root/runtime/bin/wsconfig.exe -ws iis -site 0 -v
+</pre>
+</div></div></li></ul></li><li>Test each virtual website to ensure that ColdFusion pages are served correctly.</li></ol><h3 id="WebServerManagement-Apache">Apache</h3><p>When you use Apache, you modify the <em>apache_root</em>/conf/httpd.conf file to create virtual hosts and run the Web Server Configuration Tool. You store ColdFusion pages under the web root of each virtual website.</p><h4 id="WebServerManagement-ConnectmultipleApachevirtualhostsonawebservertoasingleColdFusionserver">Connect multiple Apache virtual hosts on a web server to a single ColdFusion server</h4><ol><li>Configure DNS for each virtual website, as described in your web server documentation.</li><li><p>Open the <em>apache_root</em>/conf/httpd.conf file in a text editor and create virtual hosts, as necessary. For more information, see your Apache documentation. For example:</p><div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="theme: Confluence; brush: actionscript; gutter: false" style="font-size:12px;">... 
+NameVirtualHost 127.0.0.1 
+&lt;VirtualHost 127.0.0.1&gt; 
+ServerAdmin admin@yoursite.com 
+DocumentRoot &quot;C:/Program Files/Apache Group/Apache2/htdocs&quot; 
+ServerName SERVER02 
+ErrorLog logs/error.log 
+&lt;/VirtualHost&gt; 
+&lt;VirtualHost 127.0.0.1&gt; 
+ServerAdmin admin@yoursite.com 
+DocumentRoot &quot;C:/Program Files/Apache Group/Apache2/htdocs2&quot; 
+ServerName mystore 
+ErrorLog logs/error-store.log 
+&lt;/VirtualHost&gt; 
+&lt;VirtualHost 127.0.0.1&gt; 
+ServerAdmin admin@yoursite.com 
+DocumentRoot &quot;C:/Program Files/Apache Group/Apache2/htdocs3&quot; 
+ServerName myemployee 
+ErrorLog logs/error-employee.log 
+&lt;/VirtualHost&gt; 
+...
+</pre>
+</div></div></li><li>Test each virtual host to ensure that HTML pages are served correctly.</li><li>Run the Web Server Configuration Tool, as follows:<br /><ul><li>GUI - Specify Apache for the Web Server, specify the directory that contains the httpd.conf file, and select the Configure Web Server for ColdFusion Applications check box.</li><li><p>Command line - Specify <code>-ws</code><code>apache</code>and the directory that contains the httpd.conf file, as the following example shows:</p><div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="theme: Confluence; brush: actionscript; gutter: false" style="font-size:12px;">cf_root/runtime/bin/wsconfig.exe -ws apache  
+-dir &quot;c:\program files\apache group\apache2\conf&quot; -v
+</pre>
+</div></div><p>For additional UNIX command-line examples, see <a href="#WebServerManagement-Usingthecommand-lineinterface" rel="nofollow">Using the command-line interface</a>. The Web Server Configuration Tool updates the httpd.conf file. For a sample, see <a class="createlink" href="/wiki/pages/createpage.action?spaceKey=coldfusionen&amp;title=Apache&amp;linkCreation=true&amp;fromPageId=87505907">Apache</a>.</p></li></ul></li><li>Restart Apache. You store ColdFusion files for each virtual host in the directory specified by the DocumentRoot directive.</li><li>Test each virtual host to ensure that ColdFusion pages are served correctly.</li></ol><div class='panelMacro'><table class='infoMacro'><colgroup><col width='24'><col></colgroup><tr><td valign='top'><img src="images/icons/emoticons/information.png" width="16" height="16" align="absmiddle" alt="" border="0"></td><td>On Ubuntu, the bundled Apache Server will be configured with ColdFusion. The request for CFFileServlet and other servlet mapping requests will fail. This is because the default Apache Server running on 80, uses default virtual host. So the connector configuration with bundled Apache Server needs additional steps for user to manually add JkMountFile entry of uriworkermap.properties found in mod_jk.conf to default virtual host setting found in /etc/apache2/sites-available/default.</td></tr></table></div><h4 id="WebServerManagement-ConfiguringColdFusion10ConnectorwithApacheVirtualHostsCommunityVideo">Configuring ColdFusion 10 Connector with Apache Virtual Hosts (Community Video)</h4><p><iframe class="youtube-player" type="text/html" style="width: 400px; height: 300px"
+	src="http://www.youtube.com/embed/KIwaSJ6nxRw" frameborder="0">
+</iframe>
+    
+</p><h3 id="WebServerManagement-SunONEWebServerandiPlanet">Sun ONE Web Server and iPlanet</h3><p>When you use Sun ONE Web Server version 6, you use the Server Administrator to create virtual servers and run the Web Server Configuration Tool. You store ColdFusion pages under the web root of each virtual server.</p><div class='panelMacro'><table class='noteMacro'><colgroup><col width='24'><col></colgroup><tr><td valign='top'><img src="images/icons/emoticons/warning.png" width="16" height="16" align="absmiddle" alt="" border="0"></td><td><b>Note</b><br /><p>For earlier versions of Sun ONE/iPlanet creates separate server instances for each site and run the Web Server Configuration Tool once for each site.</p></td></tr></table></div><h4 id="WebServerManagement-ConnectmultipleSunONEWebServervirtualhoststoasingleColdFusionserver">Connect multiple Sun ONE Web Server virtual hosts to a single ColdFusion server</h4><ol><li>Using the Sun ONE Web Server Administrator, create virtual web servers for ColdFusion to use. For more information, see your Sun ONE Web Server documentation.</li><li>Configure DNS for each virtual website, as described in your web server documentation.</li><li>Test each virtual server to ensure that HTML pages are served correctly.</li><li>Run the Web Server Configuration Tool, as follows:<ul><li>GUI - Specify Sun ONE for the web server, specify the directory that contains the obj.conf and magnus.conf files, and select the Configure Web Server for ColdFusion Applications check box.</li><li><p>Command line - Specify <code>-ws</code> <code>sunone</code>and the directory that contains the obj.conf file, as the following example shows:</p><div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="theme: Confluence; brush: actionscript; gutter: false" style="font-size:12px;">cf_root/runtime/bin/wsconfig -ws sunone -dir [path to config] -coldfusion -v
+</pre>
+</div></div></li></ul></li><li>Test each virtual server to ensure that ColdFusion pages are served correctly.</li></ol>
+                    </div>
+
+                    
+                 
+                </div>             </div> 
+            <div id="footer" style="background: url(https://wikidocs.adobe.com/wiki/images/border/border_bottom.gif) repeat-x;">
+                <p><small>Document generated by Confluence on Apr 02, 2015 02:19</small></p>
+            </div>
+        </div>     </body>
+</html>

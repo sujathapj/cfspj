@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <title>ColdFusion, English documentation : Security Enhancements (ColdFusion 11)</title>
+        <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="page">
+            <div id="main">
+                <div id="main-header" class="pageSectionHeader">
+                    <h1 id="title-heading" class="pagetitle">
+                                                <span id="title-text">
+                            ColdFusion, English documentation : Security Enhancements (ColdFusion 11)
+                        </span>
+                    </h1>
+
+                    <div class="page-metadata">
+                        <p>This page last changed on Apr 23, 2014 by <font color="#0050B2">frankjen</font>.</p>
+                    </div>
+                </div>
+
+                <div id="content" class="view">
+                    <div id="main-content" class="wiki-content group">
+                    <p>This document describes all the security enhancements made in ColdFusion 11. This update fixes a few security issues and has strengthened the Server. Some notable security enhancements are described in the following sections.</p><h2 id="SecurityEnhancementsColdFusion11-Preventingattachmentdownloadforundeliveredmails">Preventing attachment download for undelivered mails</h2><p>Changes have been made to the ColdFusion Server to prevent downloading attachments of undelivered Emails. You can allow/disallow downloading of attachments for undelivered mails through the ColdFusion Administrator as follow:</p><ul><li>Login to ColdFusion Administrator</li><li>Click Server Settings &gt; Mail</li><li>Go to Mail Spool Settings and check/uncheck <strong>Allow downloading the attachments for undelivered emails</strong></li></ul><p><img class="confluence-embedded-image" src="attachments/138775676/138871600.png" data-image-src="attachments/138775676/138871600.png">               </p><h3 id="SecurityEnhancementsColdFusion11-ChangesinAdministratorAPI">Changes in Administrator API</h3><p>The Administrator API CFC, mail.cfc has also been updated with a new key <strong>allowDownload</strong> being added to GetMailProperty and SetMailProperty. You can use this API to enable/disable downloading attachments for undelivered mails programmatically. The CFC for this Administrator API are located in the <em>cf_web_root</em>/CFIDE/adminapi/mail.cfc.</p><h2 id="SecurityEnhancementsColdFusion11-SendingencryptedmailsusingtheCFMailtag">Sending encrypted mails using the &lt;CFMail&gt; tag</h2><p>You can now start sending encrypted mails using the &lt;cfmail&gt; tag. The following list describes the new attributes added to this tag to support sending encrypted mails:</p><ul><li><strong>encrypt=”true/false”</strong> – Enable/disable sending encrypted mails.</li><li><strong>recipientCert = &lt;path&gt;</strong> – Provide the path to the recipient’s public key certificate.</li><li><strong>encryptionAlgorithm = &lt;encryption_algorithm&gt;</strong>– The algorithm to use to encrypt the mails. You can use one of the following algorithms:<ul><li>DES_EDE3_CBC,</li><li>RC2_CBC (default)</li><li>AES128_CBC</li><li>AES192_CBC</li><li>AES256_CBC</li></ul></li></ul><p>For more information on the this tag, see the <a href="https://learn.adobe.com/wiki/display/coldfusionen/cfmail" class="external-link" rel="nofollow">&lt;cfmail&gt; tag</a>.</p><h2 id="SecurityEnhancementsColdFusion11-ChangesinSecureProfile">Changes in Secure Profile</h2><p>See <a href="https://wikidocs.adobe.com/wiki/display/coldfusionen/Administering+ColdFusion+Security#AdministeringColdFusionSecurity-ChangesinSecureProfileColdFusion11" rel="nofollow">this document</a>.</p><p><span style="color: rgb(0,51,102);font-size: 16.0pt;font-weight: bold;line-height: normal;">Support for concurrent login sessions for the same user</span></p><p>You can login and access an application through multiple concurrent login sessions for the given user. This option is enabled by default. If you have any security concern, please disable this option in ColdFusion Administrator.</p><p>The following changes have been made to support multiple concurrent logins:</p><ul><li><p>A new attribute, allowconcurrent has been added to the &lt;cflogin&gt; tag to allow concurrent logins:</p><div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="theme: Confluence; brush: coldfusion; gutter: false" style="font-size:12px;">&lt;cflogin allowconcurrent=&quot;true|false&quot;&gt;</pre>
+</div></div><p><span style="color: rgb(0,0,0);line-height: 13.0pt;">The default value is true. If </span><strong style="line-height: 13.0pt;">allowconcurrent</strong><span style="color: rgb(0,0,0);line-height: 13.0pt;"> is set to true, the Server allows concurrent logins for a user.</span><span style="color: rgb(0,0,0);line-height: 13.0pt;">               </span></p></li></ul><ul><li><p>A new attribute, session has been added to the &lt;cflogout&gt; tag to select the right user to logout:</p><div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="theme: Confluence; brush: coldfusion; gutter: false" style="font-size:12px;">&lt;cflogout session=&quot;all|current|others&quot;&gt; </pre>
+</div></div><p><br />The default value is current. If <strong>session</strong> is set to all, all the authenticated sessions for the current user will terminate, if it set to current, only the current session will terminate, and if it set to others, except the current session all the other sessions will be terminated.</p></li></ul><p>For administrator, to enable/disable concurrent login sessions, perform the following tasks:</p><ol><li>Login to ColdFusion Administrator</li><li>Go to Security &gt; Administrator Page</li><li>Select <strong>Allow Concurrent Login Sessions for Administrator Console<br /><img class="confluence-embedded-image" src="attachments/138775676/138871602.png" data-image-src="attachments/138775676/138871602.png"><br /> </strong></li></ol><p> </p><p>Note that by default concurrent login sessions will be enabled. Also, when the secure profile is enabled, concurrent login will be disabled.<span style="color: rgb(0,0,0);line-height: 13.0pt;"> </span></p><h3 id="SecurityEnhancementsColdFusion11-ChangesinAdministratorAPI">Changes in Administrator API</h3><p>The Administrator API CFC, security.cfc has also been updated with the following new APIs:</p><ul><li><strong>isAllowCuncurrentAdminLogin</strong> – Find out of concurrent login sessions are allowed</li><li><strong>setAllowConcurrentAdminLogin</strong> – Enable/Disable concurrent login sessions</li></ul><p>You can use this APIs to enable/disable concurrent login sessions programmatically. The CFC for this Administrator API are located in the <em>cf_web_root</em>/CFIDE/adminapi/security.cfc.</p><p><strong>Note:</strong> When secure profile is enabled on the Server, the ColdFusion Administrator will run in a single login session per username mode (concurrent mode disabled).</p><h2 id="SecurityEnhancementsColdFusion11-SupportforPBKDF2keyderivation">Support for PBKDF2 key derivation</h2><p>See <a href="https://wikidocs.adobe.com/wiki/display/coldfusionen/GeneratePBKDFKey">GeneratePBKDFKey</a></p><h2 id="SecurityEnhancementsColdFusion11-EnablingSecureProfile">Enabling Secure Profile</h2><p>With ColdFusion 10 and above you can use Secure Profile to configure selected settings. Secure Profile can be enabled during installation. You can also provide a list of IP addresses which will be allowed to access Administrator Console. In ColdFusion 11, secure profile configuration facility is extended to the Administrator console to support post installation configuration.  </p><p>To do this, from the ColdFusion Administration console, select from the ColdFusion Administrator console, <em>Security &gt; Secure Profile</em> (displayed below) and click the <em>Enable Secure Profile check box</em> to use ColdFusion’s recommended default secure profile settings.  </p><h2 id="SecurityEnhancementsColdFusion11-AdministratorsettingsaffectedbyenablingSecureProfile">Administrator settings affected by enabling Secure Profile</h2><p>A table indicating the current settings, Secure default Settings, and values at the time you enable secure profile are displayed.</p><p>Enable or disable using this check box to change between Secure and Normal modes respectively. </p><p> <img class="confluence-embedded-image" src="attachments/138775676/138871603.png" data-image-src="attachments/138775676/138871603.png"></p><div class="table-wrap"><table class="confluenceTable"><tbody><tr><td class="confluenceTd"> </td><td class="confluenceTd"><div><p class="Note"><strong>Note:</strong> Secure Profile disables Directory Browsing for a stand alone ColdFusion installation with built-in web server. Directory browsing is not configured when Secure Profile is enabled/disabled from Administrator Console.</p></div></td></tr></tbody></table></div><p>Also, when the secure profile is enabled, addtoken attribute’s default value is false for the &lt;cflocation&gt; tag.</p>
+                    </div>
+
+                                        <div class="pageSection group">
+                        <div class="pageSectionHeader">
+                            <h2 id="attachments" class="pageSectionTitle">Attachments:</h2>
+                        </div>
+
+                        <div class="greybox" align="left">
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/138775676/138871600.png">image2014-1-13 13:43:39.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/138775676/138871601.png">image2014-1-13 13:44:34.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/138775676/138871602.png">image2014-1-13 13:45:9.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/138775676/138871603.png">image2014-1-13 13:46:36.png</a> (image/png)
+                                <br/>
+                                                    </div>
+                    </div>
+                    
+                 
+                </div>             </div> 
+            <div id="footer" style="background: url(https://wikidocs.adobe.com/wiki/images/border/border_bottom.gif) repeat-x;">
+                <p><small>Document generated by Confluence on Apr 02, 2015 02:19</small></p>
+            </div>
+        </div>     </body>
+</html>
